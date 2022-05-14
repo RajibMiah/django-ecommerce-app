@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import AccountFrom
 from django.contrib.auth import authenticate , logout , login
+
 # Create your views here.
 
 def register(request):
@@ -14,9 +15,10 @@ def register(request):
     
     if request.method == 'post' or request.method == 'POST':
         form = AccountFrom(request.POST)
-
+        print('form=========' , form)
         if form.is_valid():
             form.save()
+            print("user name" ,form.cleaned_data['username'])
             return HttpResponse('account has been created')
             # REDIRECT TO E COMMERCE HOME PAGE OR PROFILE PAGE
 
@@ -39,5 +41,5 @@ def customerLogin(request):
                 return HttpResponse('You are logged in successfully!!')
             else:
                 return HttpResponse("404")        
-                
+
     return render(request , 'login.html' )
